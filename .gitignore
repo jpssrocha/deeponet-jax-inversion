@@ -8,6 +8,7 @@ wheels/
 outputs/*
 raw_data/*
 *.eqx
+**/.ipynb_checkpoints
 
 # Virtual environments
 .venv
