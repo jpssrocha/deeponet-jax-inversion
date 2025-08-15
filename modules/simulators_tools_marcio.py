@@ -265,7 +265,7 @@ def slab_simulation(inputpar, fieldY = 0.0):
     end_timing = time.time()
     seconds    = end_timing - start_timing
     hours, minutes, \
-    seconds = format_seconds_to_hhmmss(seconds, 'Simulation')
+    # seconds = format_seconds_to_hhmmss(seconds, 'Simulation')
     ##########################################################
     # Plot the pressure field ================================
 #    plot_pres(pres, Lx, Ly)
@@ -274,7 +274,7 @@ def slab_simulation(inputpar, fieldY = 0.0):
 
 ###############################################################################
 ###############################################################################
-def five_spot_simulation(inputpar, fieldY = 0.0):
+def five_spot_simulation(inputpar, fieldY):
     '''Description: This function solves the Darcy equation for the
     five-spot configuration'''
     start_timing = time.time()
@@ -323,13 +323,14 @@ def five_spot_simulation(inputpar, fieldY = 0.0):
     
     ##########################################################
     # Save the pressure field ================================
-    data = pres_flat[positions] / mega
+    data = pres_flat / mega
 #    file_name = './' + expname + '/pressure.dat'
 #    save_pressure(data, file_name)
     end_timing = time.time()
     seconds    = end_timing - start_timing
-    hours, minutes, \
-    seconds = format_seconds_to_hhmmss(seconds, 'Simulation')
+
+    # hours, minutes, \
+    # seconds = format_seconds_to_hhmmss(seconds, 'Simulation')
     ##########################################################
     # Plot the pressure field ================================
 #    plot_pres(pres / mega, Lx, Ly)
@@ -861,118 +862,117 @@ def plot_pres(pres, Lx, Ly):
 ###############################################################################
 ###############################################################################
 ###############################################################################
-'''
-simul_setup ='fivespot2D'
-beta = 9.8692e-14
-rho  = 1.
-mu   = 1.0e-03
-Dom  = [100., 100., 1.]
-mesh = [4, 4, 3]
-BHP  = 101325.0
-PL   = 0.
-PR   = 0.
-rw   = 0.125
-q    = 100.
-pos  = [255, 755, 1255, 1755, 2255,  265,  765, 1265, 1765, 2265,  275, 775,
-        1275, 1775, 2275,  285,  785, 1285, 1785, 2285,  295,  795, 1295, 1795, 2295]
-inputpar = simulationpar(simul_setup,beta,rho,mu,Dom,mesh,BHP,PR,PL,rw,q,pos,0)
-slab3D(inputpar, fieldY = 0.0)
-'''
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-simul_setup ='fivespot2D'
-beta = 9.8692e-14
-rho  = 1.
-mu   = 1.0e-03
-Dom  = [100., 100., 1.]
-mesh = [50, 50, 1]
-BHP  = 101325.0
-PL   = 0.
-PR   = 0.
-rw   = 0.125
-q    = 100.
-pos  = [255, 755, 1255, 1755, 2255,  265,  765, 1265, 1765, 2265,  275, 775,
-        1275, 1775, 2275,  285,  785, 1285, 1785, 2285,  295,  795, 1295, 1795, 2295]
-inputpar = simulationpar(simul_setup,beta,rho,mu,Dom,mesh,BHP,PR,PL,rw,q,pos,0)
-nx = mesh[0]
-ny = mesh[1]
-filen = 'YS_ref.dat'
-Y  = get_permeability_field(filen)
-#Y = np.log(np.arange(1,nx*ny+1,dtype='float'))
-#Y    = np.ones((mesh[0]*mesh[1],))
-p    = five_spot_simulation(inputpar, fieldY = Y)
 
-d = np.prod(mesh)
-P_flat = np.arange(0,d,1, dtype=float)
+if __name__ == "__main__":
+    '''
+    simul_setup ='fivespot2D'
+    beta = 9.8692e-14
+    rho  = 1.
+    mu   = 1.0e-03
+    Dom  = [100., 100., 1.]
+    mesh = [4, 4, 3]
+    BHP  = 101325.0
+    PL   = 0.
+    PR   = 0.
+    rw   = 0.125
+    q    = 100.
+    pos  = [255, 755, 1255, 1755, 2255,  265,  765, 1265, 1765, 2265,  275, 775,
+            1275, 1775, 2275,  285,  785, 1285, 1785, 2285,  295,  795, 1295, 1795, 2295]
+    inputpar = simulationpar(simul_setup,beta,rho,mu,Dom,mesh,BHP,PR,PL,rw,q,pos,0)
+    slab3D(inputpar, fieldY = 0.0)
+    '''
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+    simul_setup ='fivespot2D'
+    beta = 9.8692e-14
+    rho  = 1.
+    mu   = 1.0e-03
+    Dom  = [100., 100., 1.]
+    mesh = [50, 50, 1]
+    BHP  = 101325.0
+    PL   = 0.
+    PR   = 0.
+    rw   = 0.125
+    q    = 100.
+    pos  = [255, 755, 1255, 1755, 2255,  265,  765, 1265, 1765, 2265,  275, 775,
+            1275, 1775, 2275,  285,  785, 1285, 1785, 2285,  295,  795, 1295, 1795, 2295]
+    inputpar = simulationpar(simul_setup,beta,rho,mu,Dom,mesh,BHP,PR,PL,rw,q,pos,0)
+    nx = mesh[0]
+    ny = mesh[1]
+    filen = 'YS_ref.dat'
+    Y  = get_permeability_field(filen)
+    #Y = np.log(np.arange(1,nx*ny+1,dtype='float'))
+    #Y    = np.ones((mesh[0]*mesh[1],))
+    p    = five_spot_simulation(inputpar, fieldY = Y)
+
+    d = np.prod(mesh)
+    P_flat = np.arange(0,d,1, dtype=float)
 
 
 
 # conduct = hydraulic_condutivity(Y, nx, ny, mu, rho, beta)
 # plot_pres(conduct, N, 100)
 
-print(p)
-'''
+    print(p)
+    '''
+    simul_setup ='slab2D'
+    beta = 1.
+    rho  = 1.
+    mu   = 1.0e-0
+    Dom  = [1., 1., 1.]
+    mesh = [16, 16, 1]
+    BHP  = 101325.0
+    PL   = 1.
+    PR   = 0.
+    rw   = 0.125
+    q    = 100.
+    pos  = [1, 3, 5, 7, 9, 11, 13, 15, 16, 18, 20, 22, 24, 26, 28, 30, 33, 35, 37, 39, 41, 43, 45, 47, 48, 50, 52, 54, 56, 58, 60, 62, 65, 67, 69, 71, 73, 75, 77, 79, 80, 82, 84, 86, 88, 90, 92, 94, 97, 99, 101, 103, 105, 107, 109, 111, 112, 114, 116, 118, 120, 122, 124, 126, 129, 131, 133, 135, 137, 139, 141, 143, 144, 146, 148, 150, 152, 154, 156, 158, 161, 163, 165, 167, 169, 171, 173, 175, 176, 178,180, 182, 184, 186, 188, 190, 193, 195, 197, 199, 201, 203, 205, 207, 208, 210, 212, 214, 216, 218, 220, 222, 225, 227, 229, 231, 233, 235, 237, 239, 240, 242, 244, 246, 248, 250, 252, 254]
+    inputpar = simulationpar(simul_setup,beta,rho,mu,Dom,mesh,BHP,PR,PL,rw,q,pos,0)
+    nx = mesh[0]
+    ny = mesh[1]
+    filen = '../../simulDD_py/expref/fields/YS_ref.dat'
+    Y  = get_permeability_field(filen)
+    #Y = np.log(np.arange(1,nx*ny+1,dtype='float'))
+    #Y    = np.ones((mesh[0]*mesh[1],))
+    p    = slab_simulation(inputpar, fieldY = Y)
+
+    d = np.prod(mesh)
+    P_flat = np.arange(0,d,1, dtype=float)
 
 
 
-simul_setup ='slab2D'
-beta = 1.
-rho  = 1.
-mu   = 1.0e-0
-Dom  = [1., 1., 1.]
-mesh = [16, 16, 1]
-BHP  = 101325.0
-PL   = 1.
-PR   = 0.
-rw   = 0.125
-q    = 100.
-pos  = [1, 3, 5, 7, 9, 11, 13, 15, 16, 18, 20, 22, 24, 26, 28, 30, 33, 35, 37, 39, 41, 43, 45, 47, 48, 50, 52, 54, 56, 58, 60, 62, 65, 67, 69, 71, 73, 75, 77, 79, 80, 82, 84, 86, 88, 90, 92, 94, 97, 99, 101, 103, 105, 107, 109, 111, 112, 114, 116, 118, 120, 122, 124, 126, 129, 131, 133, 135, 137, 139, 141, 143, 144, 146, 148, 150, 152, 154, 156, 158, 161, 163, 165, 167, 169, 171, 173, 175, 176, 178,180, 182, 184, 186, 188, 190, 193, 195, 197, 199, 201, 203, 205, 207, 208, 210, 212, 214, 216, 218, 220, 222, 225, 227, 229, 231, 233, 235, 237, 239, 240, 242, 244, 246, 248, 250, 252, 254]
-inputpar = simulationpar(simul_setup,beta,rho,mu,Dom,mesh,BHP,PR,PL,rw,q,pos,0)
-nx = mesh[0]
-ny = mesh[1]
-filen = '../../simulDD_py/expref/fields/YS_ref.dat'
-Y  = get_permeability_field(filen)
-#Y = np.log(np.arange(1,nx*ny+1,dtype='float'))
-#Y    = np.ones((mesh[0]*mesh[1],))
-p    = slab_simulation(inputpar, fieldY = Y)
+    conduct = hydraulic_condutivity(Y, nx, ny, mu, rho, beta)
+    plot_pres(conduct, 1, 1)
 
-d = np.prod(mesh)
-P_flat = np.arange(0,d,1, dtype=float)
+    print(p)
 
 
 
-conduct = hydraulic_condutivity(Y, nx, ny, mu, rho, beta)
-plot_pres(conduct, 1, 1)
+    P = np.zeros((nx,ny), dtype=float)
+    start_timing = time.time()    
+    for j in range(ny):
+            aux = j * nx
+            for i in range(nx):
+                index = aux + i
+                P[i, j] = P_flat[index]
+    end_timing = time.time()
+    seconds    = end_timing - start_timing
+    hours, minutes, \
+    seconds = format_seconds_to_hhmmss(seconds, 'Simulation')
 
-print(p)
+    start_timing = time.time()  
+    P2 = P_flat.reshape((nx,ny), order='F')
+    end_timing = time.time()
+    seconds    = end_timing - start_timing
+    hours, minutes, \
+    seconds = format_seconds_to_hhmmss(seconds, 'Simulation')
 
-
-
-P = np.zeros((nx,ny), dtype=float)
-start_timing = time.time()    
-for j in range(ny):
-        aux = j * nx
-        for i in range(nx):
-            index = aux + i
-            P[i, j] = P_flat[index]
-end_timing = time.time()
-seconds    = end_timing - start_timing
-hours, minutes, \
-seconds = format_seconds_to_hhmmss(seconds, 'Simulation')
-
-start_timing = time.time()  
-P2 = P_flat.reshape((nx,ny), order='F')
-end_timing = time.time()
-seconds    = end_timing - start_timing
-hours, minutes, \
-seconds = format_seconds_to_hhmmss(seconds, 'Simulation')
-
-print(P-P2)
-nx=8
-ny=2
-Y = np.arange(1,nx*ny+1,dtype='float')
-c = Y.reshape((nx,ny), order = 'F')
-plot_pres(c, 200, 100)
-'''
+    print(P-P2)
+    nx=8
+    ny=2
+    Y = np.arange(1,nx*ny+1,dtype='float')
+    c = Y.reshape((nx,ny), order = 'F')
+    plot_pres(c, 200, 100)
+    '''
