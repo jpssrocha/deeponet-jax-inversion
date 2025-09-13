@@ -9,6 +9,7 @@ outputs/*
 raw_data/*
 *.eqx
 **/.ipynb_checkpoints
+*.png
 
 # Virtual environments
 .venv
