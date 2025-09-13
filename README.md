@@ -11,12 +11,19 @@ is stored at the `notebook/mass-spring` folder.
 # File structure:
 
 .
+
 ├── modules
+
 ├── notebook
+
 ├── outputs
+
 ├── pyproject.toml
+
 ├── raw_data
+
 ├── training_cache
+
 └── uv.lock
 
 - **modules**: Scripts with common code or performance sensible experiments.
