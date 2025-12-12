@@ -34,5 +34,6 @@ is stored at the `notebook/mass-spring` folder.
 
 **NOTE**: I'm not checking in this repository the large files generated in each
 step to avoid having to use git LFS at the beggining. Nonetheless all the data
-can be regenerated using the notebooks with the exception of the permeability
-ones since the field data was supplyed to me by a collaborator.
+can be regenerated using the notebooks for the pendulum case, and on the permeability
+case they can be requested over joar@posgrad.lncc.br.
+
